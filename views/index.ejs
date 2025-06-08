@@ -1,0 +1,36 @@
+<%- include("partials/header") %>
+
+<div class="container">
+  <form action="/add" method="POST">
+    <input type="text" name="task" placeholder="Add a task" />
+    <select name="priority">
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
+    </select>
+    <button type="submit">Add</button>
+  </form>
+
+  <ul>
+    <% todos.forEach((todo, index) => { %>
+      <li>
+        <form action="/edit" method="POST">
+          <input type="hidden" name="index" value="<%= index %>">
+          <input type="text" name="task" value="<%= todo.task %>">
+          <select name="priority">
+            <option <%= todo.priority === 'Low' ? 'selected' : '' %> value="Low">Low</option>
+            <option <%= todo.priority === 'Medium' ? 'selected' : '' %> value="Medium">Medium</option>
+            <option <%= todo.priority === 'High' ? 'selected' : '' %> value="High">High</option>
+          </select>
+          <button type="submit">Update</button>
+        </form>
+        <form action="/delete" method="POST" style="display:inline;">
+          <input type="hidden" name="index" value="<%= index %>">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+</div>
+
+<%- include("partials/footer") %>
